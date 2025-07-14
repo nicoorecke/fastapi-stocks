@@ -1,16 +1,20 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 import json
+import os
 
 app = FastAPI()
 
-@app.get("/")
-def root():
-    return {"message": "Servidor de indicadores activo"}
+# Montar archivos estáticos
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/indicadores")
-def indicadores():
-    try:
-        with open("indicadores.json", "r") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return {"error": "No hay datos aún"}
+# Cargar templates
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    with open("data/indicadores.json", "r") as f:
+        indicadores = json.load(f)
+    return templates.TemplateResponse("index.html", {"request": request, "indicadores": indicadores})

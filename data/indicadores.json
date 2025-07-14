@@ -1,0 +1,12 @@
+[
+  {
+    "ticker": "GGAL",
+    "rsi": 32.19,
+    "rsi_below_40": true
+  },
+  {
+    "ticker": "MELI",
+    "rsi": 40.61,
+    "rsi_below_40": false
+  }
+]
