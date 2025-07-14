@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Indicadores RSI - Acciones</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>RSI - Acciones</h1>
+    <table id="tabla">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>RSI</th>
+                <th>RSI < 40</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos van acá -->
+        </tbody>
+    </table>
+
+    <script>
+        async function cargarDatos() {
+            const res = await fetch("/indicadores");
+            const data = await res.json();
+
+            const tabla = document.querySelector("#tabla tbody");
+            tabla.innerHTML = "";
+
+            data.forEach(row => {
+                const tr = document.createElement("tr");
+
+                const tdTicker = document.createElement("td");
+                tdTicker.textContent = row.ticker;
+                tr.appendChild(tdTicker);
+
+                const tdRSI = document.createElement("td");
+                tdRSI.textContent = row.rsi;
+                tr.appendChild(tdRSI);
+
+                const tdCheck = document.createElement("td");
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.disabled = true;
+                checkbox.checked = row.rsi_below_40;
+                tr.appendChild(tdCheck).appendChild(checkbox);
+
+                tabla.appendChild(tr);
+            });
+        }
+
+        cargarDatos();
+    </script>
+</body>
+</html>
