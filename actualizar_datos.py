@@ -18,7 +18,7 @@ def get_rsi_status(ticker: str):
     }
 
 def actualizar():
-    tickers = ["GGAL", "MELI"]
+    tickers = ["GGAL", "MELI", "EDN"]
     resultados = [get_rsi_status(t) for t in tickers]
     with open("data/indicadores.json", "w") as f:
         json.dump(resultados, f, indent=2)
