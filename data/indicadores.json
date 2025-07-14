@@ -1,12 +1,32 @@
 [
   {
     "ticker": "GGAL",
-    "rsi": 32.19,
-    "rsi_below_40": true
+    "rsi": 31.59,
+    "sma_rsi": 35.39,
+    "rsi_cruce_arriba_sma": false
   },
   {
     "ticker": "MELI",
-    "rsi": 40.61,
-    "rsi_below_40": false
+    "rsi": 39.83,
+    "sma_rsi": 52.5,
+    "rsi_cruce_arriba_sma": false
+  },
+  {
+    "ticker": "EDN",
+    "rsi": 36.72,
+    "sma_rsi": 35.53,
+    "rsi_cruce_arriba_sma": false
+  },
+  {
+    "ticker": "TSLA",
+    "rsi": 50.63,
+    "sma_rsi": 47.42,
+    "rsi_cruce_arriba_sma": true
+  },
+  {
+    "ticker": "NVDA",
+    "rsi": 73.48,
+    "sma_rsi": 73.14,
+    "rsi_cruce_arriba_sma": false
   }
 ]

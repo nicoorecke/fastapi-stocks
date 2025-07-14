@@ -11,13 +11,15 @@
         <tr>
             <th>Ticker</th>
             <th>RSI</th>
-            <th>RSI < 40</th>
+            <th>sma rsi</th>
+            <th>compra rsi</th>
         </tr>
         {% for indicador in indicadores %}
         <tr>
             <td>{{ indicador.ticker }}</td>
             <td>{{ indicador.rsi }}</td>
-            <td>{{ indicador.rsi_below_40 }}</td>
+            <td>{{ indicador.sma_rsi }}</td>
+            <td>{{ indicador.rsi_cruce_arriba_sma }}</td>
         </tr>
         {% endfor %}
     </table>
