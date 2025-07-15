@@ -13,6 +13,10 @@
             <th>RSI</th>
             <th>sma rsi</th>
             <th>compra rsi</th>
+            <th>EMA 20</th>
+            <th>EMA 50</th>
+            <th>EMA 100</th>
+            <th>EMA 200</th>
         </tr>
         {% for indicador in indicadores %}
         <tr>
@@ -20,6 +24,10 @@
             <td>{{ indicador.rsi }}</td>
             <td>{{ indicador.sma_rsi }}</td>
             <td>{{ indicador.rsi_cruce_arriba_sma }}</td>
+            <td>{{ indicador.precio_ema_20 }}</td>
+            <td>{{ indicador.precio_ema_50 }}</td>
+            <td>{{ indicador.precio_ema_100 }}</td>
+            <td>{{ indicador.precio_ema_200 }}</td>
         </tr>
         {% endfor %}
     </table>
