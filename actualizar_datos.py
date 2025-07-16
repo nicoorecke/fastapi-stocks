@@ -28,19 +28,9 @@ def get_rsi_status(ticker: str):
                 cruce_rsi = True
                 break
 
-    # SMA 21 y 30 del precio
+    # SMAs del precio
     sma_21 = close.rolling(window=21).mean()
     sma_30 = close.rolling(window=30).mean()
-
-    sma21_ultimos = sma_21.dropna().iloc[-7:]
-    sma30_ultimos = sma_30.dropna().iloc[-7:]
-
-    cruce_sma_21_30 = False
-    if len(sma21_ultimos) == 7:
-        for i in range(1, 7):
-            if sma21_ultimos.iloc[i - 1] < sma30_ultimos.iloc[i - 1] and sma21_ultimos.iloc[i] > sma30_ultimos.iloc[i]:
-                cruce_sma_21_30 = True
-                break
 
     # EMAs
     ema_20 = ta.trend.EMAIndicator(close=close, window=20).ema_indicator()
@@ -55,7 +45,6 @@ def get_rsi_status(ticker: str):
         "rsi": round(rsi.iloc[-1], 2),
         "sma_rsi": round(sma_rsi.iloc[-1], 2),
         "rsi_cruce_arriba_sma": cruce_rsi,
-        "cruce_sma_21_30": cruce_sma_21_30,
         "precio": round(precio_actual, 2),
         "ema_20": round(ema_20.iloc[-1], 2),
         "ema_50": round(ema_50.iloc[-1], 2),
@@ -64,7 +53,11 @@ def get_rsi_status(ticker: str):
         "precio_ema_20": bool(precio_actual > ema_20.iloc[-1]),
         "precio_ema_50": bool(precio_actual > ema_50.iloc[-1]),
         "precio_ema_100": bool(precio_actual > ema_100.iloc[-1]),
-        "precio_ema_200": bool(precio_actual > ema_200.iloc[-1])
+        "precio_ema_200": bool(precio_actual > ema_200.iloc[-1]),
+        "sma_21": round(sma_21.iloc[-1], 2),
+        "sma_30": round(sma_30.iloc[-1], 2),
+        "precio_sma_21": bool(precio_actual > sma_21.iloc[-1]),
+        "precio_sma_30": bool(precio_actual > sma_30.iloc[-1])
     }
 
 def actualizar():

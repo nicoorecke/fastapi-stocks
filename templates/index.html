@@ -17,7 +17,8 @@
             <th>EMA 50</th>
             <th>EMA 100</th>
             <th>EMA 200</th>
-            <th>SMA 21/30</th>
+            <th>SMA 21</th>
+            <th>SMA 30</th>
         </tr>
         {% for indicador in indicadores %}
         <tr>
@@ -29,7 +30,8 @@
             <td>{{ indicador.precio_ema_50 }}</td>
             <td>{{ indicador.precio_ema_100 }}</td>
             <td>{{ indicador.precio_ema_200 }}</td>
-            <td>{{ indicador.cruce_sma_21_30 }}</td>
+            <td>{{ indicador.precio_sma_21 }}</td>
+            <td>{{ indicador.precio_sma_30}}</td>
         </tr>
         {% endfor %}
     </table>
