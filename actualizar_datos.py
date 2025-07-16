@@ -14,21 +14,33 @@ def get_rsi_status(ticker: str):
     else:
         close = data["Close"]
 
+    # RSI y SMA del RSI
     rsi = ta.momentum.RSIIndicator(close=close, window=14).rsi()
     sma_rsi = rsi.rolling(window=14).mean()
 
-    # Últimos 4 valores válidos del RSI y su SMA
-    rsi_ultimos = rsi.dropna().iloc[-4:]
-    sma_ultimos = sma_rsi.dropna().iloc[-4:]
+    rsi_ultimos = rsi.dropna().iloc[-7:]
+    sma_ultimos = sma_rsi.dropna().iloc[-7:]
 
-    cruce_compra = (len(rsi_ultimos) == 4 and
-        ((rsi_ultimos.iloc[0] < sma_ultimos.iloc[0] and
-          rsi_ultimos.iloc[1] > sma_ultimos.iloc[1]) or
-         (rsi_ultimos.iloc[1] < sma_ultimos.iloc[1] and
-          rsi_ultimos.iloc[2] > sma_ultimos.iloc[2]) or
-         (rsi_ultimos.iloc[2] < sma_ultimos.iloc[2] and
-          rsi_ultimos.iloc[3] > sma_ultimos.iloc[3]))
-    )
+    cruce_rsi = False
+    if len(rsi_ultimos) == 7:
+        for i in range(1, 7):
+            if rsi_ultimos.iloc[i - 1] < sma_ultimos.iloc[i - 1] and rsi_ultimos.iloc[i] > sma_ultimos.iloc[i]:
+                cruce_rsi = True
+                break
+
+    # SMA 21 y 30 del precio
+    sma_21 = close.rolling(window=21).mean()
+    sma_30 = close.rolling(window=30).mean()
+
+    sma21_ultimos = sma_21.dropna().iloc[-7:]
+    sma30_ultimos = sma_30.dropna().iloc[-7:]
+
+    cruce_sma_21_30 = False
+    if len(sma21_ultimos) == 7:
+        for i in range(1, 7):
+            if sma21_ultimos.iloc[i - 1] < sma30_ultimos.iloc[i - 1] and sma21_ultimos.iloc[i] > sma30_ultimos.iloc[i]:
+                cruce_sma_21_30 = True
+                break
 
     # EMAs
     ema_20 = ta.trend.EMAIndicator(close=close, window=20).ema_indicator()
@@ -42,7 +54,8 @@ def get_rsi_status(ticker: str):
         "ticker": ticker,
         "rsi": round(rsi.iloc[-1], 2),
         "sma_rsi": round(sma_rsi.iloc[-1], 2),
-        "rsi_cruce_arriba_sma": bool(cruce_compra),
+        "rsi_cruce_arriba_sma": cruce_rsi,
+        "cruce_sma_21_30": cruce_sma_21_30,
         "precio": round(precio_actual, 2),
         "ema_20": round(ema_20.iloc[-1], 2),
         "ema_50": round(ema_50.iloc[-1], 2),
@@ -55,7 +68,7 @@ def get_rsi_status(ticker: str):
     }
 
 def actualizar():
-    tickers = ["GGAL", "MELI", "EDN", "TSLA", "NVDA", "AMZN"]
+    tickers = ["GGAL", "MELI", "EDN", "TSLA", "NVDA", "AMZN", "MMM"]
     resultados = [get_rsi_status(t) for t in tickers]
     with open("data/indicadores.json", "w") as f:
         json.dump(resultados, f, indent=2)
