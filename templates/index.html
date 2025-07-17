@@ -19,20 +19,71 @@
             <th>EMA 200</th>
             <th>SMA 21</th>
             <th>SMA 30</th>
+            <th>MACD</th>
         </tr>
         {% for indicador in indicadores %}
         <tr>
             <td>{{ indicador.ticker }}</td>
             <td>{{ indicador.rsi }}</td>
             <td>{{ indicador.sma_rsi }}</td>
-            <td>{{ indicador.rsi_cruce_arriba_sma }}</td>
-            <td>{{ indicador.precio_ema_20 }}</td>
-            <td>{{ indicador.precio_ema_50 }}</td>
-            <td>{{ indicador.precio_ema_100 }}</td>
-            <td>{{ indicador.precio_ema_200 }}</td>
-            <td>{{ indicador.precio_sma_21 }}</td>
-            <td>{{ indicador.precio_sma_30}}</td>
+            <td>
+                {% if indicador.rsi_cruce_arriba_sma %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.precio_ema_20 %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.precio_ema_50 %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.precio_ema_100 %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.precio_ema_200 %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.precio_sma_21 %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.precio_sma_30 %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if indicador.macd_cruce_arriba_signal %}
+                    <span style="color:green;">✔️</span>
+                {% else %}
+                    <span style="color:red;">X</span>
+                {% endif %}
+            </td>
         </tr>
+
         {% endfor %}
     </table>
 </body>
