@@ -28,7 +28,7 @@
             <td>{{ indicador.sma_rsi }}</td>
             <td>
                 {% if indicador.rsi_cruce_arriba_sma %}
-                    <span style="color:green;">✔️</span>
+                    <span style="color:green;">✔️ {{indicador.dias_desde_cruce_rsi}}</span>
                 {% else %}
                     <span style="color:red;">X</span>
                 {% endif %}
@@ -77,7 +77,7 @@
             </td>
             <td>
                 {% if indicador.macd_cruce_arriba_signal %}
-                    <span style="color:green;">✔️</span>
+                    <span style="color:green;">✔️ {{indicador.dias_desde_cruce_macd}}</span>
                 {% else %}
                     <span style="color:red;">X</span>
                 {% endif %}
