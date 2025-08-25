@@ -8,83 +8,75 @@
 <body>
     <h1>Indicadores de Acciones</h1>
     <table>
-        <tr>
-            <th>Ticker</th>
-            <th>RSI</th>
-            <th>sma rsi</th>
-            <th>compra rsi</th>
-            <th>E20</th>
-            <th>E50</th>
-            <th>E100</th>
-            <th>E200</th>
-            <th>S21</th>
-            <th>S30</th>
-            <th>MACD</th>
-        </tr>
-        {% for indicador in indicadores %}
-        <tr>
-            <td>{{ indicador.ticker }}</td>
-            <td>{{ indicador.rsi }}</td>
-            <td>{{ indicador.sma_rsi }}</td>
-            <td>
-                {% if indicador.rsi_cruce_arriba_sma %}
-                    <span style="color:green;">✔️ {{indicador.dias_desde_cruce_rsi}}</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.precio_ema_20 %}
-                    <span style="color:green;">✔️</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.precio_ema_50 %}
-                    <span style="color:green;">✔️</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.precio_ema_100 %}
-                    <span style="color:green;">✔️</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.precio_ema_200 %}
-                    <span style="color:green;">✔️</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.precio_sma_21 %}
-                    <span style="color:green;">✔️</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.precio_sma_30 %}
-                    <span style="color:green;">✔️</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-            <td>
-                {% if indicador.macd_cruce_arriba_signal %}
-                    <span style="color:green;">✔️ {{indicador.dias_desde_cruce_macd}}</span>
-                {% else %}
-                    <span style="color:red;">X</span>
-                {% endif %}
-            </td>
-        </tr>
+        <thead>
+            <tr>
+                <th class="titulo">Ticker</th>
+                <th class="titulo">RSI<br>V</th>
+                <th class="titulo">SMA<br>RSI</th>
+                <th class="titulo">RSI</th>
+                <th class="titulo">EMA<br>20</th>
+                <th class="titulo">EMA<br>50</th>
+                <th class="titulo">EMA<br>100</th>
+                <th class="titulo">EMA<br>200</th>
+                <th class="titulo">SMA<br>21</th>
+                <th class="titulo">SMA<br>30</th>
+                <th class="titulo">MACD</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for indicador in indicadores %}
+            {% set all_green =
+                indicador.rsi_cruce_arriba_sma
+                and indicador.precio_ema_20
+                and indicador.precio_ema_50
+                and indicador.precio_ema_100
+                and indicador.precio_ema_200
+                and indicador.precio_sma_21
+                and indicador.precio_sma_30
+                and indicador.macd_cruce_arriba_signal
+            %}
+            <tr>
+                <td class="ticker">
+                    {% if all_green %}
+                        <span class="number-glow">{{ indicador.ticker }}</span>
+                    {% else %}
+                        {{ indicador.ticker }}
+                    {% endif %}
+                </td>
 
-        {% endfor %}
+                <td class="rsi">{{ indicador.rsi }}</td>
+                <td class="sma-rsi">{{ indicador.sma_rsi }}</td>
+
+                <!-- RSI -->
+                <td class="indicador">
+                    {% if indicador.rsi_cruce_arriba_sma %}
+                        <span class="number-glow">{{ indicador.dias_desde_cruce_rsi }}</span>
+                    {% else %}
+                        <span class="light red"></span>
+                    {% endif %}
+                </td>
+
+                <!-- EMAs -->
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_ema_20 else 'red' }}"></span></td>
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_ema_50 else 'red' }}"></span></td>
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_ema_100 else 'red' }}"></span></td>
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_ema_200 else 'red' }}"></span></td>
+
+                <!-- SMAs -->
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_sma_21 else 'red' }}"></span></td>
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_sma_30 else 'red' }}"></span></td>
+
+                <!-- MACD -->
+                <td class="indicador">
+                    {% if indicador.macd_cruce_arriba_signal %}
+                        <span class="number-glow">{{ indicador.dias_desde_cruce_macd }}</span>
+                    {% else %}
+                        <span class="light red"></span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
