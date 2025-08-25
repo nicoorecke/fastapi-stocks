@@ -67,7 +67,7 @@ def armar_mensaje(seleccion):
         )
     return "\n".join(lineas)
 
-def main():
+def notify():
     if not BOT_TOKEN:
         raise RuntimeError("Falta BOT_TOKEN (definilo en .env o variable de entorno).")
     if not CHAT_IDS:
@@ -87,5 +87,5 @@ def main():
         print("Algunos mensajes fallaron ⚠️")
 
 if __name__ == "__main__":
-    main()
+    notify()
 

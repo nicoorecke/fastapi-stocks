@@ -2,6 +2,8 @@ import yfinance as yf
 import json
 import pandas as pd
 import ta
+import subprocess
+from notify import notify
 
 def get_rsi_status(ticker: str):
     data = yf.download(ticker, period="1y", interval="1d", auto_adjust=True)
@@ -106,4 +108,5 @@ def actualizar():
         json.dump(resultados, f, indent=2)
 
 if __name__ == "__main__":
-    actualizar()
+    # actualizar()
+    notify()
