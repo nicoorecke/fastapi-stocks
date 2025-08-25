@@ -86,6 +86,3 @@ def notify():
     else:
         print("Algunos mensajes fallaron ⚠️")
 
-if __name__ == "__main__":
-    notify()
-
