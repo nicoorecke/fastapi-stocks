@@ -108,5 +108,5 @@ def actualizar():
         json.dump(resultados, f, indent=2)
 
 if __name__ == "__main__":
-    # actualizar()
+    actualizar()
     notify()
