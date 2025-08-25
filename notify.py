@@ -86,3 +86,21 @@ def notify():
     else:
         print("Algunos mensajes fallaron ⚠️")
 
+
+def mensaje_general(msj):
+    if not BOT_TOKEN:
+        raise RuntimeError("Falta BOT_TOKEN (definilo en .env o variable de entorno).")
+    if not CHAT_IDS:
+        raise RuntimeError("Falta CHAT_IDS (uno o varios separados por coma).")
+
+    mensaje = msj
+
+    ok_todos = True
+    for chat in [c.strip() for c in CHAT_IDS.split(",") if c.strip()]:
+        ok = send_telegram_message(BOT_TOKEN, chat, mensaje)
+        ok_todos = ok_todos and ok
+
+    if ok_todos:
+        print("Mensajes enviados ✅")
+    else:
+        print("Algunos mensajes fallaron ⚠️")

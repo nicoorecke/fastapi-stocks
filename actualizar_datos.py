@@ -4,8 +4,10 @@ import pandas as pd
 import ta
 import subprocess
 from notify import notify
+from notify import mensaje_general
 
 def get_rsi_status(ticker: str):
+    print(ticker)
     data = yf.download(ticker, period="1y", interval="1d", auto_adjust=True)
     if data.empty:
         return {"ticker": ticker, "status": "no data"}
@@ -108,5 +110,6 @@ def actualizar():
         json.dump(resultados, f, indent=2)
 
 if __name__ == "__main__":
+    mensaje_general("Comienza actualización")
     actualizar()
     notify()
