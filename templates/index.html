@@ -18,8 +18,7 @@
                 <th class="titulo">EMA<br>50</th>
                 <th class="titulo">EMA<br>100</th>
                 <th class="titulo">EMA<br>200</th>
-                <th class="titulo">SMA<br>21</th>
-                <th class="titulo">SMA<br>30</th>
+                <th class="titulo">W/EMA<br>6</th>
                 <th class="titulo">MACD</th>
             </tr>
         </thead>
@@ -29,11 +28,9 @@
                 indicador.rsi_cruce_arriba_sma
                 and indicador.precio_ema_20
                 and indicador.precio_ema_50
-                and indicador.precio_ema_100
-                and indicador.precio_ema_200
-                and indicador.precio_sma_21
-                and indicador.precio_sma_30
+                and indicador.precio_ema_100                
                 and indicador.macd_cruce_arriba_signal
+                and indicador.cruce_wema_ema
             %}
             <tr>
                 <td class="ticker">
@@ -63,8 +60,17 @@
                 <td class="indicador"><span class="light {{ 'green' if indicador.precio_ema_200 else 'red' }}"></span></td>
 
                 <!-- SMAs -->
-                <td class="indicador"><span class="light {{ 'green' if indicador.precio_sma_21 else 'red' }}"></span></td>
-                <td class="indicador"><span class="light {{ 'green' if indicador.precio_sma_30 else 'red' }}"></span></td>
+                <!-- <td class="indicador"><span class="light {{ 'green' if indicador.precio_sma_21 else 'red' }}"></span></td>
+                <td class="indicador"><span class="light {{ 'green' if indicador.precio_sma_30 else 'red' }}"></span></td> -->
+
+                <!-- DEMA 6 -->
+                <td class="indicador">
+                    {% if indicador.cruce_wema_ema %}
+                        <span class="number-glow">{{ indicador.dias_desde_cruce_wema_ema }}</span>
+                    {% else %}
+                        <span class="light red"></span>
+                    {% endif %}
+                </td>
 
                 <!-- MACD -->
                 <td class="indicador">
