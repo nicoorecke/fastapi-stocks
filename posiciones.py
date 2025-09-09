@@ -12,17 +12,18 @@ CHAT_IDS  = os.getenv("TEST_IDS", "")
 
 # Filtra todas las verdes
 def status_posiciones(ruta_json="data/compras.json"):
-    with open(ruta_json, "r") as f:
-        data = json.load(f)
+
     
     mensaje_general(BOT_TOKEN, CHAT_IDS, f" Actualizando posiciones")
+    with open(ruta_json, "r") as f:
+        data = json.load(f)
 
     # seleccion = []
     for d in data:
         ticker = d['ticker']
         precio = d['precio']
-        data = yf.download(ticker, period="1d", interval="1h", auto_adjust=True)
-        actual = round(data.iloc[len(data)-1]["Close",ticker],3)
+        datos = yf.download(ticker, period="1d", interval="1h", auto_adjust=True)
+        actual = round(datos.iloc[len(datos)-1]["Close",ticker],3)
 
 
         if actual < precio:
