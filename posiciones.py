@@ -14,7 +14,7 @@ CHAT_IDS  = os.getenv("TEST_IDS", "")
 def status_posiciones(ruta_json="data/compras.json"):
 
     
-    mensaje_general(BOT_TOKEN, CHAT_IDS, f" Actualizando posiciones")
+    # mensaje_general(BOT_TOKEN, CHAT_IDS, f" Actualizando posiciones")
     with open(ruta_json, "r") as f:
         data = json.load(f)
         print(data)
