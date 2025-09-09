@@ -15,7 +15,7 @@ def status_posiciones(ruta_json="data/compras.json"):
     with open(ruta_json, "r") as f:
         data = json.load(f)
     
-    # print(data)
+    mensaje_general(BOT_TOKEN, CHAT_IDS, f" Actualizando posiciones")
 
     # seleccion = []
     for d in data:

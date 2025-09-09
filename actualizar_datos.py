@@ -8,7 +8,7 @@ from telegram import send_telegram_message
 import os
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")       # guarda esto en .env o en variables de entorno
-CHAT_IDS  = os.getenv("TEST_IDS", "")    # puede ser 1 o varios separados por coma
+CHAT_IDS  = os.getenv("CHAT_IDS", "")    # puede ser 1 o varios separados por coma
 
 def get_rsi_status(ticker: str):
     print(ticker)
