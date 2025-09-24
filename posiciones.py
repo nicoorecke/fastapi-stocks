@@ -23,24 +23,28 @@ def status_posiciones(ruta_json="data/compras.json"):
     for d in data:
         ticker = d['ticker']
         precio = d['precio']
+        print(ticker)
         datos = yf.download(ticker, period="1d", interval="1h", auto_adjust=True)
-        actual = round(datos.iloc[len(datos)-1]["Close",ticker],3)
-
-
-        if actual < precio:
-            perdida = round(((actual-precio)/precio)*100, 2)
-            if perdida< -2.5:
-                mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - ⚠️Stop loss 2.5%⚠️")
-            
-                # mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - Pérdida del {perdida}%")
-
-            # print(str(round(((actual-precio)/precio)*100, 2))+ "%")
-
+        if datos.empty:
+            mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - Sin datos")
         else:
-            ganancia = round(((actual-precio)/precio)*100, 2)
-            if ganancia > 7:
-                mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - ✅Ganancia en 7%✅")
-            
-                # mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - Ganancia del {ganancia}%")
+            actual = round(datos.iloc[len(datos)-1]["Close",ticker],3)
+
+
+            if actual < precio:
+                perdida = round(((actual-precio)/precio)*100, 2)
+                if perdida< -2.5:
+                    mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - ⚠️Stop loss 2.5%⚠️")
+                
+                    # mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - Pérdida del {perdida}%")
+
+                # print(str(round(((actual-precio)/precio)*100, 2))+ "%")
+
+            else:
+                ganancia = round(((actual-precio)/precio)*100, 2)
+                if ganancia > 7:
+                    mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - ✅Ganancia en 7%✅")
+                
+                    # mensaje_general(BOT_TOKEN, CHAT_IDS, f" {ticker} - Ganancia del {ganancia}%")
 
 status_posiciones()
